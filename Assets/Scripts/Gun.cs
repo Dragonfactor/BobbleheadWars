@@ -31,8 +31,11 @@ public class Gun : MonoBehaviour
 
     void fireBullet()
     {
+        //create object from prefab
         GameObject bullet = Instantiate(bulletPrefab) as GameObject;
+        //placing the bullet at the launcher position
         bullet.transform.position = launchPosition.position;
+        //giving the bullet an initial velocity to take off with
         bullet.GetComponent<Rigidbody>().velocity = transform.parent.forward * 100;
     }
 }
