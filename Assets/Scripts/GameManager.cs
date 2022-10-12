@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,6 +32,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (player == null)
+        {
+            return;
+        }
         currentSpawnTime += Time.deltaTime;
         currentUpgradeTime += Time.deltaTime;
         if (currentSpawnTime > generatedSpawnTime)
@@ -75,7 +78,7 @@ public class GameManager : MonoBehaviour
                     alienScript.target = player.transform;
                     Vector3 targetRotation = new Vector3(player.transform.position.x,newAlien.transform.position.y, player.transform.position.z);
                     newAlien.transform.LookAt(targetRotation);
-
+                    alienScript.OnDestroy.AddListener(AlienDestroyed);
                 }
             }
         }
@@ -96,5 +99,10 @@ public class GameManager : MonoBehaviour
                 SoundManager.Instance.PlayOneShot(SoundManager.Instance.powerUpAppear);
             }
         }
+    }
+    public void AlienDestroyed()
+    {
+        aliensOnScreen -= 1;
+        totalAliens -= 1;
     }
 }
